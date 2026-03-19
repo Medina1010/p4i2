@@ -1,0 +1,9 @@
+\\begin{figure}[H]
+\\centering
+\\begin{tikzpicture}
+\\begin{axis}
+\\plot table [x = %s, y = %s, only marks] {analysis/%s};
+\\plot[domain = %f:%f]{x*%f+%f};
+\\end{axis}
+\\end{tikzpicture}
+\\end{figure}

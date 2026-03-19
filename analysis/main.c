@@ -41,18 +41,20 @@ int main (int argc, char** argv) {
 
 	printf("%s = (%s) * %.2f + %.2f, r = %.4f, a = %0.4f\n", ylabel, xlabel, m, b, r, 1000000.0f * m / (64000.0f));
 
+
+	FILE* format_file = fopen("format.fmt", "r");
+	int format[2048];
+	int i = -1;
+	while ((format[i++] = fgetc(format_file)) != -1) {}
+	format[i] = 0;
+	fclose(format_file);
+
 	FILE* output = fopen(argv[2], "w");
-	fprintf(output,
-		"\\begin{tikzpicture}\n"
-		"\\begin{axis}\n"
-		"\\plot table [x = %s, y = %s] {%s}\n"
-		"\\plot[domain = %f:%f]{x*%f+%f}\n"
-		"\\end{axis}\n"
-		"\\end{tikzpicture}",
+	fprintf(output, format,
 		xlabel, ylabel, argv[1],
 		points[0].x, points[points_count-1].x,
 		m, b
-		);
+	);
 
 	fclose(output);
 

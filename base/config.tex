@@ -1,12 +1,13 @@
+\usepackage{float}
 \usepackage{amsmath}
 \usepackage{geometry}
 \usepackage{multicol}
 \usepackage{siunitx}
 \usepackage{pgfplots}
+\pgfplotsset{
+  width = 0.8\linewidth
+}
 \usepackage[
-backend=bibtex,
-style=alphabetic,
-sorting=ynt
+  backend = bibtex
 ]{biblatex}
-\addbibresource{sample.bib}
-\title{\titulo}
+\addbibresource{res/referencias.bib}
