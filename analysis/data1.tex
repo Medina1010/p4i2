@@ -1,0 +1,6 @@
+\begin{tikzpicture}
+\begin{axis}
+\plot table [x = Temperatura, y = Longitud] {analysis/data1.tsv};
+\plot[domain = 32.759998:43.619999]{x*1.080938+-35.179653};
+\end{axis}
+\end{tikzpicture}
