@@ -1,9 +1,21 @@
-\\begin{figure}[H]
-\\centering
-\\begin{tikzpicture}
-\\begin{axis}
-\\plot table [x = %s, y = %s, only marks] {analysis/%s};
-\\plot[domain = %f:%f]{x*%f+%f};
-\\end{axis}
-\\end{tikzpicture}
-\\end{figure}
+\begin{figure} [H]
+  \centering
+  \begin{tikzpicture}
+    \begin{axis} [
+      xlabel = {%s $\si{\degree C}$},
+      ylabel = {%s mm $10^{-2}$},
+      grid = both
+    ]
+      \plot table [
+        x = {%s},
+	y = {%s},
+	only marks
+      ] {analysis/%s};
+      \plot [
+        domain = %f:%f
+      ] {x * %f + %f};
+    \end{axis}
+  \end{tikzpicture}
+  \caption{%s contra %s para el %s}
+  \label{fig:%s}
+\end{figure}

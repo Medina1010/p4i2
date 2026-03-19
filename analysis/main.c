@@ -1,4 +1,7 @@
 #include <stdio.h>
+#include <math.h>
+
+#define longitud 620
 
 int main (int argc, char** argv) {
 	FILE* file = fopen(argv[1], "r");
@@ -38,25 +41,60 @@ int main (int argc, char** argv) {
 	float m = (XY - X * Y) / (XX - X * X);
 	float b = (XX * Y - X * XY) / (XX - X * X);
 	float r = (SXY * SXY) / (SSX * SSY);
+	float SSe = SSY - m * m * SSX;
+	float SSm = SSe / SSX;
+	float SSb = SSm * XX;
 
-	printf("%s = (%s) * %.2f + %.2f, r = %.4f, a = %0.4f\n", ylabel, xlabel, m, b, r, 1000000.0f * m / (64000.0f));
-
+	printf(
+		"####################################\n"
+		"# Valores calculados para el %5s #\n"
+		"####################################\n", argv[3]);
+	printf("%s = (%s) * %.2f + %.2f, r = %.6f\n", ylabel, xlabel, m, b, r);
+	printf("m = %.6f +- %.6f\n", m, sqrt(SSm));
+	printf("b = %.4f +- %.4f\n", b, sqrt(SSb));
+	printf("a = (%.3f +- %.3f) * 1e-6\n", 1000000 * m / longitud / 100, 1000000 * m / longitud / 100 * (1 / longitud + sqrt(SSm) / m));
+	printf("\n");
 
 	FILE* format_file = fopen("format.fmt", "r");
-	int format[2048];
-	int i = -1;
-	while ((format[i++] = fgetc(format_file)) != -1) {}
+	char format[2048];
+	int i = 0;
+	int ch = 0;
+	while ((ch = fgetc(format_file)) != -1)
+		format[i++] = ch;
 	format[i] = 0;
 	fclose(format_file);
 
 	FILE* output = fopen(argv[2], "w");
 	fprintf(output, format,
+		xlabel, ylabel,
 		xlabel, ylabel, argv[1],
 		points[0].x, points[points_count-1].x,
-		m, b
+		m, b,
+		ylabel, xlabel, argv[3], argv[3]
 	);
-
 	fclose(output);
+
+	FILE* output_eq = fopen(argv[4], "w");
+	fprintf(output_eq,
+		"\\begin{equation}\n"
+		"\\label{eq:%s}\n"
+		"\\Delta l = T(%.2f\\pm %.2f)\\ \\si{\\degree C^{-1}} %.1f\\pm %.1f\n"
+		"\\end{equation}\n",
+		argv[3],
+		m, sqrt(SSm),
+		b, sqrt(SSb));
+	fclose(output_eq);
+
+	FILE* output_constante = fopen(argv[5], "w");
+	fprintf(output_constante,
+		"\\begin{equation}\n"
+		"\\label{eq:constante %s}\n"
+		"\\alpha = (%.1f\\pm %.1f)\\ \\si{\\degree C^{-1}}\n"
+		"\\end{equation}\n",
+		argv[3],
+		10000 * m / longitud,
+		10000 * m / longitud * (1 / longitud + sqrt(SSm) / m));
+	fclose(output_constante);
 
 	return 0;
 }
