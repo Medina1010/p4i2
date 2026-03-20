@@ -3,12 +3,31 @@
 
 #define longitud 620
 
+typedef struct {
+	size_t count, capacity;
+	float* data;
+} arr_float_t;
+
+void arr_float_free (arr_float_t* arr) {
+	free(arr->data);
+	free(arr);
+}
+
+void arr_float_push (arr_float_t* arr, float x) {
+	if (arr->capacity == 0) {
+		arr->capacity = 1;
+		arr->data = realloc(arr->data, arr->capacity);
+	}
+	if (arr->capacity == arr->count) {
+		arr->capacity *= 1.5;
+		arr->data = realloc(arr->data, arr->capacity);
+	}
+	arr->data[arr->count++] = x;
+}
+
 int main (int argc, char** argv) {
 	FILE* file = fopen(argv[1], "r");
-	struct {
-		float x, y, xy, xx, yy;
-	} points[32];
-	int points_count = 0;
+	arr_float_t x, y, xx, yy, xy;
 	char xlabel[64], ylabel[64];
 	char line[128];
 	fgets(line, 128, file);
