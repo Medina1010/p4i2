@@ -16,6 +16,6 @@
       ] {x * %f + %f};
     \end{axis}
   \end{tikzpicture}
-  \caption{%s contra %s para el %s}
+  \caption{%s contra %s para el %s, con un coeficiente de correlacion lineal de %.4f}
   \label{fig:%s}
 \end{figure}

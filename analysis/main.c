@@ -95,7 +95,9 @@ int main (int argc, char** argv) {
 		xlabel, ylabel, argv[1],
 		points[0].x, points[points_count-1].x,
 		m, b,
-		ylabel, xlabel, argv[3], argv[3]
+		ylabel, xlabel, argv[3],
+		r * r,
+		argv[3]
 	);
 	fclose(output);
 
