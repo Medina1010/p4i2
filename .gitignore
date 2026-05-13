@@ -2,3 +2,6 @@
 *.fdb_latexmk
 *.pdf
 *.aux
+analysis/*.tex
+analysis/main
+

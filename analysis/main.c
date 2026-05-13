@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <math.h>
 
 #define longitud 620
@@ -27,6 +28,11 @@ void arr_float_push (arr_float_t* arr, float x) {
 
 int main (int argc, char** argv) {
 	FILE* file = fopen(argv[1], "r");
+
+        struct {
+		float x, y, xx, yy, xy;
+        } points[longitud];
+	int points_count = 0;
 	arr_float_t x, y, xx, yy, xy;
 	char xlabel[64], ylabel[64];
 	char line[128];

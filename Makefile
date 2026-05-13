@@ -2,4 +2,4 @@ all: pdf
 data:
 	make -C analysis
 pdf: data
-	tectonic main.tex
+	tectonic f4i2.tex -o ../vault/
