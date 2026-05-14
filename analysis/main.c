@@ -103,20 +103,23 @@ int main (int argc, char** argv) {
 
 	FILE* output_eq = fopen(argv[4], "w");
 	fprintf(output_eq,
-		"\\begin{equation}\n"
+		"\\begin{equation}"
+		"\\begin{split}\n"
 		"\\label{eq:%s}\n"
-		"\\Delta l = T(%.2f\\pm %.2f)\\ \\si{\\degree C^{-1}} %.1f\\pm %.1f\n"
+		"\\Delta l = &T(%.2f\\pm %.2f)\\times10^{-2}\\ \\si{mm\\degree C^{-1}}\\\\ &- (%.1f\\pm %.1f)\\times10^{-2}\\ \\si{mm}\n"
+		"\\end{split}\n"
 		"\\end{equation}\n",
+
 		argv[3],
 		m, sqrt(SSm),
-		b, sqrt(SSb));
+		-b, sqrt(SSb));
 	fclose(output_eq);
 
 	FILE* output_constante = fopen(argv[5], "w");
 	fprintf(output_constante,
 		"\\begin{equation}\n"
 		"\\label{eq:constante %s}\n"
-		"\\alpha = (%.1f\\pm %.1f)\\ \\si{\\degree C^{-1}}\n"
+		"\\alpha = (%.1f\\pm %.1f) \\times10^{-6}\\ \\si{\\degree C^{-1}}\n"
 		"\\end{equation}\n",
 		argv[3],
 		10000 * m / longitud,
